@@ -69,11 +69,12 @@ async function getUsers(req,res){
     //     return (userObj.name==name && userObj.age==age)
     // })
     // res.send(filteredData);
-    let allUsers=await userModel.findOne({name :'Abhishek'})
+    let allUsers=await userModel.findOne({name:"Abhishek"})
    
     res.json({msg:"users retreived", allUsers});
-    //  res.send(user);// console.log('getUser called');
-    // next();
+    //  res.send(user);
+    // console.log('getUser called');
+    //  next();
 }
 
 function postUser(req, res){
@@ -111,20 +112,30 @@ function getUserById(req, res){
     res.json({ msg: "user id is ", "obj": req.params });
 }
 
-function getSignup(req,res){
+  function getSignup(req,res){
     res.sendFile("/public/index.html",{root:__dirname});
+    // res.json();
 }
-function postSignup(req,res){
-    let { email,name,password } = req.body;
-    console.log(req.body) ;
+async function postSignup(req,res){
+    // let { email,name,password } = req.body;
+   try{
+    let data=req.body;
+    let user=await userModel.create(data);
+    console.log(data);
     res.json({
         msg:"user signed up",
-        email,
-        name,
-        password
+        user
+        // email,
+        // name,
+        // password
     })
 }
-app.listen(5000);
+catch(err){
+    res.json({
+       err:err.message
+    })
+}
+}app.listen(5000);
 
 mongoose.connect(db_link)
 .then(function(db){
@@ -148,12 +159,12 @@ const userSchema=mongoose.Schema({
     password:{
         type:String,
         required:true,
-        minlength:5
+        minlength:4
     },
-    confirmPassword:{
+    confirmpassword:{
         type:String,
         required:true,
-        minlength:5
+        minlength:4
     },
 });
 
