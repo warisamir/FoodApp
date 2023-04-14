@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+//this is frst contri
 const mongoose=require("mongoose")
 const db_link=require('./secret');
 app.use(express.json());
