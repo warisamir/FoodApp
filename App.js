@@ -30,7 +30,7 @@ app.use("/auth", authRouter);
 
 userRouter
     .route("/")
-    .get(middleware1,getUser,middleware2)
+    .get(middleware1,getUsers)
     .post(postUser)
     .patch(updateUser)
     .delete(deleteUser)
@@ -58,20 +58,22 @@ function middleware1(req,res,next){
     console.log("middleware 1 called");
     next();
 }
-function middleware2(req,res){
-    console.log("middleware 2 is called");
-    // res.json({msg:"user returned "});
-}
-function getUser(req,res,next){
+// function middleware2(req,res){
+//     console.log("middleware 2 is called");
+//     // res.json({msg:"user returned "});
+// }
+async function getUsers(req,res){
     console.log(req.query);
     let { name, age } = req.query;
     // let filteredData=user.filter(userObj => {
     //     return (userObj.name==name && userObj.age==age)
     // })
     // res.send(filteredData);
-    // res.send(user);
-    console.log('getUser called');
-    next();
+    let allUsers=await userModel.findOne({name :'Abhishek'})
+   
+    res.json({msg:"users retreived", allUsers});
+    //  res.send(user);// console.log('getUser called');
+    // next();
 }
 
 function postUser(req, res){
@@ -127,12 +129,46 @@ app.listen(5000);
 mongoose.connect(db_link)
 .then(function(db){
     console.log("db connected")
-    console.log(db);
+    // console.log(db);
 })
 .catch(function(err){
     console.log(err)
 });
 
+const userSchema=mongoose.Schema({
+    name:{
+        type:String,
+        required:true,
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true
+    },
+    password:{
+        type:String,
+        required:true,
+        minlength:5
+    },
+    confirmPassword:{
+        type:String,
+        required:true,
+        minlength:5
+    },
+});
+
+const userModel=mongoose.model("userModel",userSchema);
+
+// (async function createUser(){
+//     let user={
+//          name:"Abhishek",
+//          email:"a2@gmail.com",
+//          password:"waris",
+//          confirmPassword:"waris"
+//     };
+//     let data=await userModel.create(user);
+//     console.log(data)
+// })();
 
 
 
