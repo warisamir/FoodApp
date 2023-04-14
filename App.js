@@ -124,13 +124,14 @@ function postSignup(req,res){
 }
 app.listen(5000);
 
-// mongoose.connect(db_link)
-// .then(function(db){
-//     console.log("db connected")
-// })
-// .catch(function(err){
-//     console.log(err)
-// });
+mongoose.connect(db_link)
+.then(function(db){
+    console.log("db connected")
+    console.log(db);
+})
+.catch(function(err){
+    console.log(err)
+});
 
 
 
