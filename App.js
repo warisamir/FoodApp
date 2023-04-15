@@ -3,6 +3,8 @@ const app = express();
 //this is frst contri
 const mongoose=require("mongoose")
 const db_link=require('./secret');
+const validate  = require('email-validator');
+
 app.use(express.json());
 
 let user = [
@@ -87,21 +89,26 @@ function postUser(req, res){
     });
 }
 
-function updateUser(req, res){
+async function updateUser(req, res){
     console.log(req.body);
     let dataToBeUpdated = req.body;
-    for (key in dataToBeUpdated) {
-        user[key] = dataToBeUpdated[key];
-    }
+    // for (key in dataToBeUpdated) {
+    //     user[key] = dataToBeUpdated[key];
+    // }
+    let doc=await userModel.findOneAndUpdate({email:"abc@gmail.com"},
+    dataToBeUpdated);
     res.json({
         message: "data updated succesfully"
     })
 }
 
-function deleteUser(req, res){
-    user = {};
+async function deleteUser(req, res){
+    // let dataToBedeleted=req.body;
+    // let doc=await userModel.findOneAndDelete("{"email":"abc=@gmail.com"});
+    let doc =await userModel.findOneAndRemove({"email":"akshay@gmail.com"})
+    console.log(doc)
     res.json({
-        msg: "user has been deleted"
+        msg: "user has been deleted",
     });
 }
 
@@ -120,6 +127,7 @@ async function postSignup(req,res){
     // let { email,name,password } = req.body;
    try{
     let data=req.body;
+    console.log('in postsignup')
     let user=await userModel.create(data);
     console.log(data);
     res.json({
@@ -135,14 +143,13 @@ catch(err){
        err:err.message
     })
 }
-}app.listen(5000);
+}
+app.listen(5000);
 
-mongoose.connect(db_link)
-.then(function(db){
+mongoose.connect(db_link).then(function(db){
     console.log("db connected")
     // console.log(db);
-})
-.catch(function(err){
+}).catch(function(err){
     console.log(err)
 });
 
@@ -154,7 +161,10 @@ const userSchema=mongoose.Schema({
     email:{
         type:String,
         required:true,
-        unique:true
+        unique:true,
+        validate:function(){
+            return validate.validate(this.email);
+        },
     },
     password:{
         type:String,
@@ -164,10 +174,23 @@ const userSchema=mongoose.Schema({
     confirmpassword:{
         type:String,
         required:true,
-        minlength:4
+        minlength:4,
+        validate:function(){
+            return this.confirmpassword==this.password
+        }
     },
 });
+// ------------learning hoooks
+// userSchema.pre("save",function(){
+//     console.log("before saving in db");
+// })
+// userSchema.post("save",function(){
+//     console.log("after saving in db");
+// })
 
+userSchema.pre(save,function(){
+    this.confirmpassword==undefined;
+})
 const userModel=mongoose.model("userModel",userSchema);
 
 // (async function createUser(){
