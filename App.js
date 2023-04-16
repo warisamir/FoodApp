@@ -1,10 +1,7 @@
 const express = require('express');
 const app = express();
-//this is frst contri
-const mongoose=require("mongoose")
-const db_link=require('./secret');
-const validate  = require('email-validator');
-
+//this is frst contri 
+const userModel=require('./models/userModel');
 app.use(express.json());
 
 let user = [
@@ -40,6 +37,9 @@ userRouter
 userRouter
     .route("/:name")
     .get(getUserById);
+    userRouter
+    .route("/:setCookie")
+    .get(setCookie);
 
 authRouter
     .route('/signup')
@@ -144,54 +144,17 @@ catch(err){
     })
 }
 }
+
+function setCookie(req,res){
+    res.setHeader('Set-Cookie','isLoggedIn=true');
+    res.send("cookie has been set");
+}
+function getCookie(){
+    res.setHeader('Set-Cookie','isLoggedIn=true');
+    res.send("cookie has been set");
+}
 app.listen(5000);
 
-mongoose.connect(db_link).then(function(db){
-    console.log("db connected")
-    // console.log(db);
-}).catch(function(err){
-    console.log(err)
-});
-
-const userSchema=mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-    },
-    email:{
-        type:String,
-        required:true,
-        unique:true,
-        validate:function(){
-            return validate.validate(this.email);
-        },
-    },
-    password:{
-        type:String,
-        required:true,
-        minlength:4
-    },
-    confirmpassword:{
-        type:String,
-        required:true,
-        minlength:4,
-        validate:function(){
-            return this.confirmpassword==this.password
-        }
-    },
-});
-// ------------learning hoooks
-// userSchema.pre("save",function(){
-//     console.log("before saving in db");
-// })
-// userSchema.post("save",function(){
-//     console.log("after saving in db");
-// })
-
-userSchema.pre(save,function(){
-    this.confirmpassword==undefined;
-})
-const userModel=mongoose.model("userModel",userSchema);
 
 // (async function createUser(){
 //     let user={
