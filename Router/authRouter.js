@@ -1,7 +1,8 @@
 const e = require("express");
 const authRouter=e.Router();
 const userModel=require('../models/userModel')
-
+var jwt=require("jsonwebtoken");
+const JWT_KEY="zcsdf123gbceegt"
 authRouter
 .route('/signup')
 .get(getSignup)
@@ -17,7 +18,7 @@ function getSignup(req,res){
 }
 
 
-async function postSignup(req,res){
+async function postSignup(req,res){   
     // let { email,name,password } = req.body;
    try{
     let data=req.body;
@@ -27,7 +28,7 @@ async function postSignup(req,res){
     res.json({
         msg:"user signed up",
         user
-        // email,
+        // email, 
         // name,
         // password
     })
@@ -45,8 +46,11 @@ async function LoginUser(req,res){
     let user=await userModel.findOne({email:email});
     if(user){
         //check if password matches
+        
         if(password==user.password){
-            res.cookies('IsLoggedIn',true)
+         let uid=user["_id"];
+            var token=jwt.sign({payload:uid},JWT_KEY);
+            res.cookie("login",token);
             res.json({
          msg:"user logged in"
         });
