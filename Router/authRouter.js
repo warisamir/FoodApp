@@ -39,7 +39,6 @@ catch(err){
 }
 }
 
-
 async function LoginUser(req,res){
    try{
      let { email,password } = req.body;
@@ -47,6 +46,7 @@ async function LoginUser(req,res){
     if(user){
         //check if password matches
         if(password==user.password){
+            res.cookies('IsLoggedIn',true)
             res.json({
          msg:"user logged in"
         });
@@ -69,4 +69,5 @@ catch(err){
     })
 }
 }
+
 module.exports=authRouter;

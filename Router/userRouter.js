@@ -1,9 +1,10 @@
 const e = require("express");
 const userRouter=e.Router();
+const userModel=require('../models/userModel');
 
 
 userRouter.route("/")
-.get(middleware1,getUsers)
+.get(protectRoute,getUsers)
 .post(postUser).patch(updateUser)
 .delete(deleteUser);
 
@@ -13,19 +14,28 @@ userRouter.route("/getcookies").get(getCookies);
 
 userRouter.route("/:name").get(getUserById);
 
-function middleware1(req,res,next){
-    console.log("middleware 1 called");
+// let IsLoggedIn =false;
+//.isadmin cookie can be used to identify b/w user and admin
+function protectRoute(req,res,next){
+if(req.cookies.IsLoggedIn){
     next();
 }
+else{
+return res.json({
+    msg:"operation not allowed ",
+})
+}
+}
+
 
 async function getUsers(req,res){
     console.log(req.query);
-    let { name, age } = req.query;
+    // let { name, age } = req.query;
     // let filteredData=user.filter(userObj => {
     //     return (userObj.name==name && userObj.age==age)
     // })
     // res.send(filteredData);
-    let allUsers=await userModel.findOne({name:"Abhishek"})
+    let allUsers=await userModel.find( )
    
     res.json({msg:"users retreived", allUsers});
     //  res.send(user);
@@ -83,6 +93,8 @@ function getCookies(req,res){
     console.log(cookies);
     res.send("cookie received")
  }
+
+
 
  module.exports=userRouter
 // (async function createUser(){
