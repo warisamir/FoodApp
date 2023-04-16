@@ -33,14 +33,14 @@ userRouter
     .post(postUser)
     .patch(updateUser)
     .delete(deleteUser)
+userRouter
+    .route("/:setCookie")
+    .get(setCookie);
 
 userRouter
     .route("/:name")
     .get(getUserById);
-    userRouter
-    .route("/:setCookie")
-    .get(setCookie);
-
+    
 authRouter
     .route('/signup')
     .get(getSignup)
