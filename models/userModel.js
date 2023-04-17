@@ -1,14 +1,16 @@
+
 const mongoose=require("mongoose")
-const db_link=require('../secret');
+const {db_link}=require('../view/secret');
 const validate  = require('email-validator');
 const bcrypt=require('bcrypt')
-
+// console.log(db_link)
 mongoose.
-connect(db_link).then(function(db){
+connect(db_link).then(function(){
     console.log("db connected")
     // console.log(db);
 })
 .catch(function(err){
+    console.log(db_link);
     console.log(err)
 });
 
