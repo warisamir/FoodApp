@@ -40,6 +40,15 @@ const userSchema=mongoose.Schema({
             return this.confirmpassword==this.password
         }
     },
+    role:{
+        type:String,
+        enum:['admin','user','resturantowner','deliveryBoy'],
+        default:'user',
+    },
+    profileimage:{
+        type:String,
+        default:'img/users/default.jpg'
+    }
 });
 
 userSchema.pre("save",function(){

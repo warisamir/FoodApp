@@ -3,21 +3,29 @@ const userRouter=e.Router();
 
 const {getUsers,updateUser,
     setCookies,getCookies
-    ,getUserById,
+    ,getUserById,getAllUsers,
     deleteUser,postUser}=require('../controller/userController')
 
 const {protectRoute}=require('../view/helper')
 
-userRouter.route("/") 
-.get(protectRoute,getUsers)
-.post(postUser).patch(updateUser)
-.delete(deleteUser);
+userRouter.
+route('/:id')
+.patch(updateUser)
+.delete(deleteUser)
 
-userRouter.route("/setcookies").get(setCookies);
+//profile page
+app.use(protectRoute)
+.get(getUser)
+userRouter
+.route('/userProfile')
+.get(getUsers)
+//admin specific
+app.use(isAuthorised(['admin']));
+userRouter.route('')
+.get(getAllUsers)
 
-userRouter.route("/getcookies").get(getCookies);
 
-userRouter.route("/:name").get(getUserById);
+
 
 // let IsLoggedIn =false;
 //.isadmin cookie can be used to identify b/w user and admin

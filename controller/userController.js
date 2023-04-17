@@ -26,15 +26,42 @@ module.exports.postUser=function(req, res){
 
 module.exports.updateUser= async function (req, res){
     console.log(req.body);
-    let dataToBeUpdated = req.body;
-    // for (key in dataToBeUpdated) {
-    //     user[key] = dataToBeUpdated[key];
+    let id=req.params.id;  
+     let dataToBeUpdated = req.body;
+    //  {
+    //    name:"waris",
+    //    email:"warisamir1918@gmail.com" 
     // }
-    let doc=await userModel.findOneAndUpdate({email:"abc@gmail.com"},
-    dataToBeUpdated);
+    let user=await userModel.findById(id);
+    try{
+    if(user){
+      const keys=[]  //give name & email filled
+      for (key in dataToBeUpdated) {
+       keys.psuh(key)
+    }
+    for(let i=0;i<key.length;i++){
+        user[keys[i]]=dataToBeUpdated[keys[i]]
+    }
+    const updatedDAta=await user.save();
+ 
+    // let doc=await userModel
+    // .findOneAndUpdate({email:"abc@gmail.com"},
+    // dataToBeUpdated);
     res.json({
-        message: "data updated succesfully"
+        message: "data updated succesfully",
+    });
+}
+    else{
+        res.json({
+            message:"user not found",
+        });
+    }
+}
+catch(err){
+    res.json({
+        message:err.message,
     })
+}
 }
 
 module.exports.deleteUser =async function (req, res){
