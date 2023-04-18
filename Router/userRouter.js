@@ -2,8 +2,7 @@ const e = require("express");
 const userRouter=e.Router();
 
 const {getUsers,updateUser,
-    setCookies,getCookies
-    ,getUserById,getAllUsers,
+    getAllUsers,
     deleteUser,postUser}=require('../controller/userController')
 
 const {protectRoute}=require('../view/helper')
