@@ -68,16 +68,3 @@ catch(err){
 }
 }
 
-
-//isAuthorised=p? check the users role
-module.exports.isAuthorised=function(roles){
-    return function(req,res,next){
-       let role=req.role;
-       if(roles.includes(role)){
-        next();
-       }
-       res.status({
-        msg:"operation not allowed"
-       })
-    }
-}
