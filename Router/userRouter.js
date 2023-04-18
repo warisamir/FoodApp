@@ -6,15 +6,23 @@ const {getUsers,updateUser,
     deleteUser,postUser}=require('../controller/userController')
 
 const {protectRoute}=require('../view/helper')
-
+const{signup,login}=require('../controller/authController')
 userRouter.
 route('/:id')
 .patch(updateUser)
 .delete(deleteUser)
 
+userRouter.route('/login')
+.post(login);
+
+userRouter.route('/signup')
+.post(signup);
+
 //profile page
 app.use(protectRoute)
 .get(getUser)
+
+const{signup,login}=require('../controller/authController')
 userRouter
 .route('/userProfile')
 .get(getUsers)

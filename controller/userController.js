@@ -1,4 +1,4 @@
-const { Model } = require('mongoose');
+const  {Model} = require('mongoose');
 const userModel=require('../models/userModel')
 module.exports.getUsers =async function (req,res){
     // console.log(req.query);
@@ -91,7 +91,7 @@ catch(err){
 }
 }
 
-module.exports. getAllUser=function (req, res){
+module.exports.getAllUser= async function (req, res){
  try{  
     let allUsers= await userModel.find();
    res.json({
