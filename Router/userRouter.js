@@ -1,12 +1,13 @@
 const e = require("express");
 const userRouter=e.Router();
-
+const userModel=require('../models/userModel')
 const {getUsers,updateUser,
     getAllUsers,
     deleteUser,postUser}=require('../controller/userController')
 
-const {protectRoute}=require('../view/helper')
+// const {protectRoute}=require('../view/helper')
 const{signup,login}=require('../controller/authController')
+const {isAuthorised,protectRoute}=require('../view/helper')
 userRouter.
 route('/:id')
 .patch(updateUser)
@@ -19,20 +20,14 @@ userRouter.route('/signup')
 .post(signup);
 
 //profile page
-app.use(protectRoute)
-.get(getUser)
-
-const{signup,login}=require('../controller/authController')
-userRouter
-.route('/userProfile')
-.get(getUsers)
-//admin specific
-app.use(isAuthorised(['admin']));
-userRouter.route('')
-.get(getAllUsers)
+userRouter.use(protectRoute)
 
 
-
+// const{signup,login}=require('../controller/authController')
+userRouter.route('/userProfile').get(getUsers);
+//admin specific 
+userRouter.use(isAuthorised(['admin']));
+userRouter.route('').get(getAllUsers);
 
 // let IsLoggedIn =false;
 //.isadmin cookie can be used to identify b/w user and admin

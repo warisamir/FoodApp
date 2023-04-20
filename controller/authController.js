@@ -1,4 +1,4 @@
-const express =require('express');
+ const express =require('express');
 const userModel=require('../models/userModel')
 var jwt=require("jsonwebtoken")
 const {JWT_KEY}=require('../view/helper')
@@ -68,3 +68,15 @@ catch(err){
 }
 }
 
+// module.exports.isAuthorised=function(roles){
+//    return function(req,res,next){
+//     let role=req.role;
+//     if(roles.includes(role)){
+//         next();
+//     }
+//     res.status({
+//         msg:'operation not alloowed'
+//     })
+//    }
+
+// }

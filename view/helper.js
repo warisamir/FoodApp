@@ -1,11 +1,16 @@
 var jwt=require('jsonwebtoken')
-const {JWT_KEY}=require('../view/secret')
+const {JWT_KEY}=require('./secret');
+const userModel = require('../models/userModel');
 
-module.exports.protectRoute=function (req,res,next){
-    if(req.cookies.login){
-        let token=req.cookies.login;
-        let isVerified=jwt.verify(token,JWT_KEY);
-       if(isVerified) next();
+module.exports.protectRoute= async function (req,res,next){
+        let token;
+        if(req.cookies.login){
+            token=req.cookies.login; 
+        let payloadObj=jwt.verify(token,JWT_KEY);
+        const user=await userModel.findById(payloadObj.payload);
+        req.id=user.id;
+        req.role=user.role; 
+       if(payloadObj) next();
        else{
         req.json({
             msg:"user not verified",

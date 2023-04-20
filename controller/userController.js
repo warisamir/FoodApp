@@ -1,7 +1,7 @@
 const  {Model} = require('mongoose');
 const userModel=require('../models/userModel')
 module.exports.getUsers =async function (req,res){
-    // console.log(req.query);
+    
     try{
     // let { name, age } = req.query;
     // let filteredData=user.filter(userObj => {
@@ -9,7 +9,7 @@ module.exports.getUsers =async function (req,res){
     // })
     // res.send(filteredData);
     let id=req.params.id;
-    let user=await userModel.findById(id)
+    let user=await userModel.findById(id); 
    
     res.json({msg:"users retreived", users});
     }
@@ -36,19 +36,20 @@ module.exports.getUsers =async function (req,res){
 module.exports.updateUser= async function (req, res){
     console.log(req.body);
     let id=req.params.id;  
-     let dataToBeUpdated = req.body;
+    
     //  {
     //    name:"waris",
     //    email:"warisamir1918@gmail.com" 
     // }
-    let user=await userModel.findById(id);
+    let user=await userModel.findById(id); 
+    let dataToBeUpdated = req.body;
     try{
     if(user){
       const keys=[]  //give name & email filled
-      for (key in dataToBeUpdated) {
-       keys.psuh(key)
+      for (let key in dataToBeUpdated) {
+       keys.push(key); 
     }
-    for(let i=0;i<key.length;i++){
+    for(let i=0;i<keys.length;i++){
         user[keys[i]]=dataToBeUpdated[keys[i]]
     }
     const updatedata=await user.save();

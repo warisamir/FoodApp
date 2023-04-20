@@ -45,7 +45,7 @@ const userSchema=mongoose.Schema({
         enum:['admin','user','resturantowner','deliveryBoy'],
         default:'user',
     },
-    profileimage:{
+    profileImage:{
         type:String,
         default:'img/users/default.jpg'
     }
