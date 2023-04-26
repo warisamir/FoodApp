@@ -32,9 +32,11 @@ module.exports.isAuthorised=function(roles){
        if(roles.includes(role)){
         next();
        }
+       else{
        res.status(401).json({
-        msg:"operation not allowed"
+        msg:"role invalid",
        })
     }
+}
 }
     

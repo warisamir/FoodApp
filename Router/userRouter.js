@@ -24,7 +24,7 @@ userRouter.use(protectRoute)
 
 
 // const{signup,login}=require('../controller/authController')
-userRouter.route('/userProfile').get(getUsers);
+userRouter.route('/profile').get(getUsers);
 //admin specific 
 userRouter.use(isAuthorised(['admin']));
 userRouter.route('/').get(getAllUser);

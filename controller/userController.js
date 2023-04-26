@@ -8,10 +8,10 @@ module.exports.getUsers =async function (req,res){
     //     return (userObj.name==name && userObj.age==age)
     // })
     // res.send(filteredData);
-    let id=req.params.id;
+    let id=req.id;
     let user=await userModel.findById(id); 
    
-    res.json({msg:"users retreived", users});
+    res.json({msg:"users retreived", user });
     }
     catch(err){
         res.json({
