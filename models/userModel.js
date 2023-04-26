@@ -3,10 +3,11 @@ const mongoose=require("mongoose")
 const {db_link}=require('../view/secret');
 const validate  = require('email-validator');
 const bcrypt=require('bcrypt')
-// console.log(db_link)
+// console.log(db_   link)
+const uuidv4 =require("uuid");
 mongoose.
 connect(db_link).then(function(){
-    console.log("db connected")
+    console.log("userdb connected")
     // console.log(db);
 })
 .catch(function(err){

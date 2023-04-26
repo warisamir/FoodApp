@@ -119,6 +119,12 @@ catch(err){
     })
 }
 }
+module.exports.logout=function(req,res){
+    res.cookie('login','',{maxAge:1});
+    res.json({
+        msg:'user logged out successfully'
+    })
+}
 // module.exports.isAuthorised=function(roles){
 //    return function(req,res,next){
 //     let role=req.role;

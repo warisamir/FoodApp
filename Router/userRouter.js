@@ -7,7 +7,7 @@ const {getUsers,updateUser,
 
 
     // const {protectRoute}=require('../view/helper')
-const{signup,login,forgetpassword,resetpassword}=require('../controller/authController')
+const{signup,login,forgetpassword,logout,resetpassword}=require('../controller/authController')
 const {isAuthorised,protectRoute}=require('../view/helper')
 userRouter.
 route('/:id')
@@ -23,9 +23,14 @@ userRouter.route('/signup')
 userRouter.route('/forgetpassword')
 .post(signup);
 
-userRouter.route('/forgetpassword').post(forgetpassword);
-userRouter.route('/resetpassword/:token').post(resetpassword);
+userRouter.route('/forgetpassword')
+.post(forgetpassword);
 
+userRouter.route('/resetpassword/:token')
+.post(resetpassword);
+
+userRouter.route
+("/logout").get(logout)
 //profile page
 userRouter.use(protectRoute)
 
