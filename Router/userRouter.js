@@ -2,7 +2,7 @@ const e = require("express");
 const userRouter=e.Router();
 const userModel=require('../models/userModel')
 const {getUsers,updateUser,
-    getAllUsers,
+    getAllUser,
     deleteUser,postUser}=require('../controller/userController')
 
 // const {protectRoute}=require('../view/helper')
@@ -27,7 +27,7 @@ userRouter.use(protectRoute)
 userRouter.route('/userProfile').get(getUsers);
 //admin specific 
 userRouter.use(isAuthorised(['admin']));
-userRouter.route('').get(getAllUsers);
+userRouter.route('/').get(getAllUser);
 
 // let IsLoggedIn =false;
 //.isadmin cookie can be used to identify b/w user and admin

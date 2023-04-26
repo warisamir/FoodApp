@@ -1,8 +1,8 @@
  const express =require('express');
 const userModel=require('../models/userModel')
 var jwt=require("jsonwebtoken")
-const {JWT_KEY}=require('../view/helper')
-
+const {JWT_KEY}=require("../view/secret")
+// console.log("1234",JWT_KEY);
 
 
 module.exports.signup=async function (req,res){   
