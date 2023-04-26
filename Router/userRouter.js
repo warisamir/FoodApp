@@ -5,8 +5,9 @@ const {getUsers,updateUser,
     getAllUser,
     deleteUser,postUser}=require('../controller/userController')
 
-// const {protectRoute}=require('../view/helper')
-const{signup,login}=require('../controller/authController')
+
+    // const {protectRoute}=require('../view/helper')
+const{signup,login,forgetpassword,resetpassword}=require('../controller/authController')
 const {isAuthorised,protectRoute}=require('../view/helper')
 userRouter.
 route('/:id')
@@ -18,6 +19,12 @@ userRouter.route('/login')
 
 userRouter.route('/signup')
 .post(signup);
+
+userRouter.route('/forgetpassword')
+.post(signup);
+
+userRouter.route('/forgetpassword').post(forgetpassword);
+userRouter.route('/resetpassword/:token').post(resetpassword);
 
 //profile page
 userRouter.use(protectRoute)

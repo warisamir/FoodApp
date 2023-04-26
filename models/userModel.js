@@ -48,11 +48,12 @@ const userSchema=mongoose.Schema({
     profileImage:{
         type:String,
         default:'img/users/default.jpg'
-    }
+    },
+    resetToken:String
 });
 
 userSchema.pre("save",function(){
-    this.confirmpassword==undefined;
+    this.confirmpassword=undefined;
 });
 
 //  userSchema.pre('save',async function(){
@@ -61,6 +62,15 @@ userSchema.pre("save",function(){
 //     let hashedString=await bcrypt.hash(this.password,salt);
 //     this.password=hashedString;
 // })
-
+userSchema.methods.createResetToken=function(){
+    const resetToken=uuidv4();
+    this.resetToken=resetToken;
+    return resetToken;
+}
+userSchema.methods.resetPasswordHandler=function(password,confirmPassword){
+    this.password=password;
+    this.confirmPassword=confirmPassword;
+    this.resetToken=undefined;
+}
 const userModel=mongoose.model("userModel",userSchema);
 module.exports=userModel; 
