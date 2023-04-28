@@ -131,7 +131,7 @@ module.exports.updateReview=async function(req,res){
 
 module.exports.deleteReview=async function (req,res) {
     try {
-       let planId=req.body.id;
+       let planId=req.params.id;
        let id=req.body.id;
        let review =await reviewModel.findByIdAndDelete(id);
        res.json({
