@@ -35,7 +35,12 @@ const planSchema=mongoose.Schema({
     },
     ratingsAverage:{
         type:Number,
-    }
+        // default:0
+    },
+    // nor:{
+    //     type:Number,
+    //     dafault:0
+    // }
 })
 const planModel=mongoose.model("planModel",planSchema);
 module.exports=planModel;
