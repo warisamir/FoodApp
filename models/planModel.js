@@ -39,20 +39,20 @@ const planSchema=mongoose.Schema({
 })
 const planModel=mongoose.model("planModel",planSchema);
 module.exports=planModel;
-(async function createPlan(){
-    let plan ={
-        name:"superfvdwe232",
-        duration:3,
-        price:9000,
-        ratingsAverage:3.8,
-        discount:10
-    }
-    //create make a instance of model values 
-    let data=await planModel.create(plan)
-    console.log(data);
-    // const doc=new planModel(plan);
-    // await doc.save();
-})()
+// (async function createPlan(){
+//     let plan ={
+//         name:"superman2024",
+//         duration:3,
+//         price:9000,
+//         ratingsAverage:2.7,
+//         discount:10
+//     }
+//     //create make a instance of model values 
+//     let data=await planModel.create(plan)
+//     // console.log(data);
+//     // const doc=new planModel(plan);
+//     // await doc.save();
+// })()
 
 
 
