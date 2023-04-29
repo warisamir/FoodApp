@@ -2,9 +2,8 @@
 const userModel=require('../models/userModel')
 var jwt=require("jsonwebtoken")
 const {JWT_KEY}=require("../view/secret")
-// console.log("1234",JWT_KEY);
-
-
+console.log("1234",JWT_KEY);
+const {sendMail}=require('./utility/nodemailer')
 module.exports.signup=async function (req,res){   
     // let { email,name,password } = req.body;
    try{
@@ -12,6 +11,8 @@ module.exports.signup=async function (req,res){
     console.log('in postsignup')
     let user=await userModel.create(data);
     if(user){
+        //send mail
+       await  sendMail("signup",data);
         res.json({
             msg:"user signed up",
             user,
@@ -80,7 +81,7 @@ module.exports.forgetpassword=async function(req,res){
         let resetpasswordLink=`${req.protocol}://${req.get('host')}/resetpassword/${resetToken}`;
         //send email to user
         //using nodemailer
-
+       await sendMail('forgetpassword',{email,resetpasswordLink});
     }
     else{
         res.json({
@@ -89,7 +90,7 @@ module.exports.forgetpassword=async function(req,res){
     }
    } 
    catch(err){
-    res.status().json({
+    res.status(400).json({
         msg:err.message,
     });
    }

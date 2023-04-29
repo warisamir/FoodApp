@@ -20,11 +20,11 @@ userRouter.route('/login')
 userRouter.route('/signup')
 .post(signup);
 
-userRouter.route('/forgetpassword')
-.post(signup);
+// userRouter.route('/forgetpassword')
+// .post(signup);
 
 userRouter.route('/forgetpassword')
-.post(forgetpassword);
+.get(forgetpassword);
 
 userRouter.route('/resetpassword/:token')
 .post(resetpassword);
@@ -39,7 +39,7 @@ userRouter.use(protectRoute)
 userRouter.route('/profile').get(getUsers);
 //admin specific 
 userRouter.use(isAuthorised(['admin']));
-userRouter.route('/').get(getAllUser);
+userRouter.route('/all').get(getAllUser);
 
 // let IsLoggedIn =false;
 //.isadmin cookie can be used to identify b/w user and admin
