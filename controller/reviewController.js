@@ -77,11 +77,12 @@ module.exports.getReview=async function (req,res){
  
 module.exports.createReview=async function (req,res){
     try{
-        const planid=req.params.plan;
+        console.log("inside create");
+        const planId=req.params.plan;
        
-        const plan=await planModel.findById(planid)
+        const plan=await planModel.findById(planId)
          const review=req.body;
-         const postReview=await planModel.create(review);
+         const postReview=await reviewModel.create(review);
         //  plan.ratingsAverage=(plan.ratingsAverage*plan.nor+req.body.rating)/(plan.nor+1);
         //  plan.nor+=1;
         //  await plan.save();
