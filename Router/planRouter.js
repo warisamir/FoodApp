@@ -6,7 +6,7 @@ const {getAllPlans,getPlan,createPlan,updatePlan,deletePlan,top3Plans}=require('
 const { protectRoute, isAuthorised } = require("../view/helper");
 
 planRouter
-.route('/all')
+.route('/allPlans')
 .get(getAllPlans)
 
 //logged in not neccessary

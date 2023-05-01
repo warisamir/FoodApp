@@ -4,7 +4,7 @@ const {db_link}=require('../view/secret');
 const validate  = require('email-validator');
 const bcrypt=require('bcrypt')
 // console.log(db_   link)
-const uuidv4 =require("uuid");
+const { v4: uuidv4 } = require('uuid');
 mongoose.
 connect(db_link).then(function(){
     console.log("userdb connected")
@@ -35,7 +35,7 @@ const userSchema=mongoose.Schema({
     },
     confirmpassword:{
         type:String,
-        required:true,
+        // required:true,
         minlength:4,
         validate:function(){
             return this.confirmpassword==this.password
@@ -50,7 +50,9 @@ const userSchema=mongoose.Schema({
         type:String,
         default:'img/users/default.jpg'
     },
-    resetToken:String
+    resetToken:{
+        type:String
+    }
 });
 
 userSchema.pre("save",function(){
@@ -62,16 +64,20 @@ userSchema.pre("save",function(){
 //     console.log(salt);
 //     let hashedString=await bcrypt.hash(this.password,salt);
 //     this.password=hashedString;
+//     this.confirmpassword=undefined;
 // })
-userSchema.methods.createResetToken=function(){
+userSchema.methods.createResetToken= async function(){
     const resetToken=uuidv4();
     this.resetToken=resetToken;
+    console.log('pumba',this);
+    // this.confirmPassword=this.password;
+    await this.save();
     return resetToken;
 }
-userSchema.methods.resetPasswordHandler=function(password,confirmPassword){
+userSchema.methods.resetPasswordHandler=function(password,confirmpassword){
     this.password=password;
-    this.confirmPassword=confirmPassword;
+    this.confirmpassword=confirmpassword;
     this.resetToken=undefined;
 }
 const userModel=mongoose.model("userModel",userSchema);
-module.exports=userModel; 
+module.exports=userModel;  

@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 //this is frst contri 
 const cookieParser=require('cookie-parser');
+var cors=require("cors");
+app.use(cors());
+app.use(express.static('public/build'))
+
 app.use(express.json());
 app.use(cookieParser())
 
@@ -14,7 +18,6 @@ app.use('/user', userRouter);
 app.use('/plan', planRouter);
 app.use('/Review',reviewRouter);
 app.use('/booking',bookingRouter);
-// const planmodel=require('../models/planModels')
-app.listen(5000,()=>{
-    console.log('Server running');
-});
+
+const port=process.env.PORT||5000;
+app.listen(port);

@@ -24,7 +24,7 @@ userRouter.route('/signup')
 // .post(signup);
 
 userRouter.route('/forgetpassword')
-.get(forgetpassword);
+.post(forgetpassword);
 
 userRouter.route('/resetpassword/:token')
 .post(resetpassword);
@@ -36,7 +36,7 @@ userRouter.use(protectRoute)
 
 
 // const{signup,login}=require('../controller/authController')
-userRouter.route('/profile').get(getUsers);
+userRouter.route('/profilePage').get(getUsers);
 //admin specific 
 userRouter.use(isAuthorised(['admin']));
 userRouter.route('/all').get(getAllUser);

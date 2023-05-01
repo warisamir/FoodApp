@@ -2,11 +2,12 @@ const express=require("express");
 const bookingRouter=express.Router()
 const {protectRoute}=require("../view/helper")
 const {createSession}=require('../controller/bookingController');
-bookingRouter
-.route("/createSession").get(function (req,res){
+
+bookingRouter.use(express.static("public"))
+bookingRouter.route("/createSession").get(function (req,res){
     res.sendFile("C:/Users/waris amir/Desktop/FoodApp/public/index.html")
 });
-// bookingRouter.use(protectRoute)
+bookingRouter.use(protectRoute)
 bookingRouter.route("/createSession").post(createSession);
 
 module.exports=bookingRouter;

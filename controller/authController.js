@@ -5,7 +5,7 @@ const {JWT_KEY}=require("../view/secret")
 console.log("1234",JWT_KEY);
 const {sendMail}=require('./utility/nodemailer')
 module.exports.signup=async function (req,res){   
-    // let { email,name,password } = req.body;
+    // let { email,napme,password } = req.body;
    try{
     let data=req.body;//np password
     console.log('in postsignup')
@@ -68,41 +68,40 @@ catch(err){
     })
 }
 }
-
-module.exports.forgetpassword=async function(req,res){
-   try{
-    let {email}=req.body;
-    let user=userModel.findOne({email:email});
-    if(user){
-        //resetToken  save in db
-        const resetToken=user.createResetToken();
-        //https
-        //https://xyz.com/resetpassword/resettoken
-        let resetpasswordLink=`${req.protocol}://${req.get('host')}/resetpassword/${resetToken}`;
-        //send email to user
-        //using nodemailer
-       await sendMail('forgetpassword',{email,resetpasswordLink});
+module.exports.forgetpassword= async function(req,res){
+    try{
+        let {email}=req.body;
+        const user=await userModel.findOne({email:email});
+        if(user){
+            const resetToken=await user.createResetToken();
+            console.log("forget",resetToken);
+            let resetPasswordLink=`${req.protocol}://${req.get('host')}/user/resetpassword/${resetToken}`
+            await sendMail("forgetpassword",{email,resetPasswordLink})
+            res.json({
+                msg:"email sent successfully"
+            })
+        }
+        else{
+            res.json({
+                msg:`user not found`,
+            })
+        }
     }
-    else{
-        res.json({
-            msg:'user not found'
+    catch(err){
+        res.status(400).json({
+            msg:err.message,
         })
     }
-   } 
-   catch(err){
-    res.status(400).json({
-        msg:err.message,
-    });
-   }
 }
 
 module.exports.resetpassword=async function(req,res){
     try {
-    const token=req.params.token;
+    const token=req.params.token;f
+    console.log("0987",token);
     let {password,confirmPassword}=req.body;
     const user= await userModel.findOne({resetToken:token});
     if(user){
-    user.resetpasswordHandler(password,confirmPassword);
+    user.resetPasswordHandler(password,confirmPassword);
     await user.save();
     res.json({
         msg:"password change successfully"
