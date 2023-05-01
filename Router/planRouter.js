@@ -17,7 +17,7 @@ planRouter
 planRouter.use(protectRoute)
 //check whether logged in or not
 
-planRouter.route('/single/:id')
+planRouter.route('/plan/:id')
 .get(getPlan)
 
 
