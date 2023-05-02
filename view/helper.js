@@ -14,18 +14,18 @@ module.exports.protectRoute= async function (req,res,next){
        else{
         req.json({
             msg:"user not verified",
-        }}
-       }
+        })
     }
-
+       }
+    
     //first comiit
     else{
     return res.json({
         msg:"operation not allowed ",
     })
     }
-    }
-
+    
+}
     
 //isAuthorised=p? check the users role
 module.exports.isAuthorised=function(roles){
