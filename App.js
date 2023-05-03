@@ -9,10 +9,10 @@ app.use(express.static('public/build'))
 app.use(express.json());
 app.use(cookieParser())
 
-const userRouter = require('../Router/userRouter');
-const planRouter = require('../Router/planRouter')
-const reviewRouter=require('../Router/reviewRouter');
-const bookingRouter = require('../Router/BookingRouter');
+const userRouter = require('./Router/userRouter');
+const planRouter = require('./Router/planRouter')
+const reviewRouter=require('./Router/reviewRouter');
+const bookingRouter = require('./Router/BookingRouter');
 app.use('/user', userRouter);
 // app.use("/auth", authRouter);
 app.use('/plan', planRouter);
