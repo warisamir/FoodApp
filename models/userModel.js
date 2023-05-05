@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { db_link } = require("../secret");
 const validate = require("email-validator");
-const bcrypt = require("bcrypt");
+const {bcrypt}= require("bcrypt");
 // console.log(db_   link)
 const { v4: uuidv4 } = require("uuid");
 mongoose
