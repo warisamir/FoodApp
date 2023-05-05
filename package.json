@@ -17,7 +17,7 @@
     "uuid": "^9.0.0"
   },
   "name": "foodapp",
-  "description": "",
+  "description": "backend for meal app",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
