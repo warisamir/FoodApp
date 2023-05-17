@@ -78,14 +78,20 @@ module.exports.getReview=async function (req,res){
 module.exports.createReview=async function (req,res){
     try{
         console.log("inside create");
-        const planId=req.params.plan;
+        const planId=req.params.id;
        
         const plan=await planModel.findById(planId)
-         const review=req.body;
+        let user=req.id
+        console.log("type is ",typeof user)
+        console.log(req.body)
+        
+        console.log("The user id is",user)
+        console.log("The plan id is",planId)
+         const review=await req.body;
          const postReview=await reviewModel.create(review);
-        //  plan.ratingsAverage=(plan.ratingsAverage*plan.nor+req.body.rating)/(plan.nor+1);
-        //  plan.nor+=1;
-        //  await plan.save();
+         plan.ratingsAverage=(plan.ratingsAverage*plan.nor+req.body.rating)/(plan.nor+1);
+         plan.nor+=1;
+         await plan.save();
          await postReview.save();
             res.json(
                 {
