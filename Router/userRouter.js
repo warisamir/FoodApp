@@ -18,11 +18,19 @@ const {
   resetpassword,
 } = require("../controller/authController");
 const { isAuthorised, protectRoute } = require("../helper");
-userRouter.route("/:id").patch(updateUser).delete(deleteUser);
 
-userRouter.route("/login").post(login);
+userRouter
+.route("/:id")
+.patch(updateUser)
+.delete(deleteUser);
 
-userRouter.route("/signup").post(signup);
+userRouter
+.route("/login")
+.post(login);
+
+userRouter.
+route("/signup")
+.post(signup);
 
 // userRouter.route('/forgetpassword')
 // .post(signup);
@@ -36,10 +44,10 @@ userRouter.route("/logout").get(logout);
 userRouter.use(protectRoute);
 
 // const{signup,login}=require('../controller/authController')
-userRouter.route("/profilePage").get(getUsers);
+userRouter.route("/profile").get(getUsers);
 //admin specific
 userRouter.use(isAuthorised(["admin"]));
-userRouter.route("/all").get(getAllUser);
+userRouter.route("/").get(getAllUser);
 
 // let IsLoggedIn =false;
 //.isadmin cookie can be used to identify b/w user and admin

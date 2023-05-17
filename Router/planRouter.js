@@ -1,7 +1,9 @@
 const express = require("express");
 
 const planRouter = express.Router();
-const planModel = require("../models/planModel");
+// const planModel = require("../models/planModel");
+const { protectRoute, isAuthorised } = require("../helper");
+
 const {
   getAllPlans,
   getPlan,
@@ -10,7 +12,6 @@ const {
   deletePlan,
   top3Plans,
 } = require("../controller/planController");
-const { protectRoute, isAuthorised } = require("../helper");
 
 planRouter.route("/allPlans").get(getAllPlans);
 
@@ -22,7 +23,7 @@ planRouter.use(protectRoute);
 
 planRouter.route("/plan/:id").get(getPlan);
 
-planRouter.use(isAuthorised(["admin", "resturantowner"]));
+planRouter.use(isAuthorised(["admin", "restaurantowner"]));
 //check which role loggied member have
 
 planRouter.route("/crud").post(createPlan);

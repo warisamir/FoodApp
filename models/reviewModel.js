@@ -18,7 +18,8 @@ mongoose
 const reviewSchema = new mongoose.Schema({
   review: {
     type: String,
-    require: [true, "review is required"],
+    required: [true, "review is required"],
+    maxlength: [260, "review length should not exceed more than 260 character"],
   },
   rating: {
     type: Number,
@@ -33,7 +34,7 @@ const reviewSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "userModel",
-    required: [true, "review must belong to a user"],
+    required: [true, "User must logged in"],
   },
   plan: {
     type: mongoose.Schema.ObjectId,

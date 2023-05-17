@@ -23,15 +23,15 @@ module.exports.getUsers =async function (req,res){
     //  next();
 }
 
-// module.exports.postUser=function(req, res){
-//     console.log(req.body.Name);
-//     //then i can put this in db 
-//     user.push(req.body);
-//     res.json({
-//         message: "Data received successfully",
-//         user: req.body
-//     });
-// }
+module.exports.postUser=function(req, res){
+    console.log(req.body.Name);
+    //then i can put this in db 
+    user.push(req.body);
+    res.json({
+        message: "Data received successfully",
+        user: req.body,
+    });
+}
 
 module.exports.updateUser= async function (req, res){
     console.log(req.body);
@@ -81,9 +81,17 @@ module.exports.deleteUser =async function (req, res){
    try{
     let id=req.params.id;
     let user=await userModel.findByIdAndDelete(id)
+    if(user){
     res.json({
         msg: "user has been deleted",user
     });
+}
+   else{
+    res.json({
+        msg:"user not found",
+        user,
+    })
+   }
 }
 catch(err){
     res.json({
@@ -96,7 +104,7 @@ module.exports.getAllUser= async function (req, res){
  try{  
     let allUsers= await userModel.find();
    res.json({
-         msg: "user id is ",allUsers
+         msg: "user id is ",allUsers,
          });
 }
 catch(err){

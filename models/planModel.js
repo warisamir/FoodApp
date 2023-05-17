@@ -9,7 +9,7 @@ mongoose
     // console.log(db);
   })
   .catch(function (err) {
-    console.log(db_link);
+    // console.log(db_link);
     console.log(err);
   });
 const planSchema = mongoose.Schema({
@@ -17,7 +17,7 @@ const planSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    maxlength: [20, `plan name should not exceed more than 20 character`],
+    maxlength: [20, `plan name should not exceed more than ${this.maxlength} character`],
   },
   duration: {
     type: Number,

@@ -3,10 +3,10 @@ const planModel = require('../models/planModel');
 module.exports.getPlan =async function (req,res){
     
     try{
-    let id=req.params.id;
-    let plan=await userModel.findById(id); 
+    let planid=req.params.id;
+    let plan=await userModel.findById(planid); 
    if(plan){
-     return res.json({msg:"plan retreived", data:plan ,});
+     return res.json({msg:"plan retreived", plan });
     }else {
         return res.json({
             msg:"plan not found",
@@ -33,11 +33,11 @@ module.exports.getPlan =async function (req,res){
 
 module.exports.getAllPlans= async function (req, res){
  try{  
-    let plans= await planModel.find();
-    if(plans) {
+    let allplans= await planModel.find();
+    if(allplans) {
       return res.json({
          msg: " All plans retrieved ",
-         data:plans
+        allplans,
          });
 }
 else{
@@ -56,12 +56,19 @@ catch(err){
 module.exports.createPlan= async function (req,res){
    try {
      let plan=req.body;
-    let createPlan =await planModel.create(plan);
+    let newPlan =await planModel.create(plan);
+    if(newPlan){
     return res.json({
         msg:"plan created successfully",
-        createPlan, 
+        newPlan, 
     });
 } 
+   else{
+    return res.json({
+        msg:"plan not created",newPlan
+    });
+   }
+   }
 catch(err){
     res.json({
         msg:err.message,
@@ -71,14 +78,14 @@ catch(err){
 
 module.exports.updatePlan= async function (req,res){
     try { 
-        let id=req.params.id;
+        let planid=req.params.id;
         // console.log(id);
       let dataToBeUpdated=req.body;
      let keys=[]
      for(let key in dataToBeUpdated){
         keys.push(key)
      }
-     let plan=await planModel.findById(id);
+     let plan=await planModel.findById(planid);
      for (let i=0;i<keys.length;i++){
         plan[keys[i]]=dataToBeUpdated[keys[i]];
      }
@@ -98,10 +105,11 @@ module.exports.updatePlan= async function (req,res){
 module.exports.deletePlan= async function (req,res){
     try { 
         let id =req.params.id;
+        console.log(id);
      let deletePlan =await planModel.findByIdAndDelete(id);
      return res.json({
          msg:"plan deleted successfully",
-         deletePlan
+         deletePlan,
      })
  }
  catch(err){
