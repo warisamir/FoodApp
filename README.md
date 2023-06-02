@@ -53,8 +53,6 @@ npm start to start app
 ## Testing : Postman
 ## Frontend : React, Backend : Express
 ## Deployment : 
-    * Backend :Heroku 
-    * Frontend : Netlify
     * Codebase : Github
     * Database server : MongoDB Atlas 
 * Futher improvement : videos, feedback ,meal level  
