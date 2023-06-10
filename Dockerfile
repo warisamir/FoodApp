@@ -1,3 +1,6 @@
-FROM ubuntu:latest
+FROM node:latest
 
-COPY . .
+COPY . ./
+
+CMD npm i 
+CMD npm start
