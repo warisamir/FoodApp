@@ -5,7 +5,7 @@ const { JWT_KEY } = require("../secret");
 console.log("1234", JWT_KEY);
 const { sendMail } = require("./utility/nodemailer");
 module.exports.signup = async function (req, res) {
-  // let { email,napme,password } = req.body;
+  // let { email,name,password } = req.body;
   try {
     let data = req.body; //np password
     console.log("in postsignup");
